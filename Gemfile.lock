@@ -2,12 +2,18 @@ PATH
   remote: .
   specs:
     tanker-user-token (1.4.0)
+      rbnacl-libsodium (~> 1.0.16)
 
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.3)
+    ffi (1.9.23)
     rake (10.5.0)
+    rbnacl (5.0.0)
+      ffi
+    rbnacl-libsodium (1.0.16)
+      rbnacl (>= 3.0.1)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
