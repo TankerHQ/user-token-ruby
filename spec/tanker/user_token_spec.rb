@@ -1,7 +1,47 @@
 # frozen_string_literal: true
 RSpec.describe Tanker::UserToken do
-  it "has a version number" do
+  it 'has a version number' do
     expect(Tanker::UserToken::VERSION).not_to be nil
+  end
+
+  it 'returns a valid token signed with the trustchain private key' do
+    trustchain = {
+      id: 'AzES0aJwDCej9bQVY9AUMZBCLdX0msEc/TJ4DOhZaQs=',
+      pk: 'dOeLBpHz2IF37UQkS36sXomqEcEAjSyCsXZ7irn9UQA=',
+      sk: 'cBAq6A00rRNVTHicxNHdDFuq6LNUo6gAz58oKqy9CGd054sGkfPYgXftRCRLfqxeiaoRwQCNLIKxdnuKuf1RAA=='
+    }
+
+    user_id = 'matz@tanker.io'
+
+    b64_token = Tanker::UserToken.generate(trustchain[:id], trustchain[:sk], user_id)
+    json_token = Base64.decode64(b64_token)
+    token = JSON.parse(json_token)
+
+    # check valid control byte in user secret
+    hashed_user_id = Base64.decode64(token['user_id'])
+    user_secret = Base64.decode64(token['user_secret'])
+    expect(hashed_user_id.bytesize).to be 32
+    expect(user_secret.bytesize).to be 32
+    size = Tanker::UserToken::Crypto::HASH_MIN_SIZE
+    control = Tanker::UserToken::Crypto.generichash(user_secret[0..-2] + hashed_user_id, size)
+    expect(user_secret.bytes.last).to eq(control.bytes.first)
+
+    # check with valid signature
+    signed_data = Base64.decode64(token['ephemeral_public_signature_key']) +
+                  Base64.decode64(token['user_id'])
+
+    verify_key = RbNaCl::VerifyKey.new(Base64.decode64(trustchain[:pk]))
+
+    expect {
+      verify_key.verify(Base64.decode64(token['delegation_signature']), signed_data)
+    }.not_to raise_exception # no RbNaCl::BadSignatureError
+
+    # check with invalid signature
+    expect {
+      signature_length = RbNaCl::SigningKey.signature_bytes
+      random_signature = RbNaCl::Random.random_bytes(signature_length)
+      verify_key.verify(random_signature, signed_data)
+    }.to raise_exception(RbNaCl::BadSignatureError)
   end
 end
 
