@@ -1,0 +1,38 @@
+PATH
+  remote: ../..
+  specs:
+    tanker-user-token (1.4.0)
+      rbnacl-libsodium (~> 1.0.16)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ffi (1.9.23)
+    json (2.1.0)
+    mustermann (1.0.2)
+    rack (2.0.4)
+    rack-protection (2.0.1)
+      rack
+    rbnacl (5.0.0)
+      ffi
+    rbnacl-libsodium (1.0.16)
+      rbnacl (>= 3.0.1)
+    sinatra (2.0.1)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.1)
+      tilt (~> 2.0)
+    sinatra-cross_origin (0.4.0)
+    tilt (2.0.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  json (~> 2.1.0)
+  sinatra (~> 2.0.1)
+  sinatra-cross_origin (~> 0.4.0)
+  tanker-user-token!
+
+BUNDLED WITH
+   1.16.1

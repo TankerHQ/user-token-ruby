@@ -20,10 +20,14 @@ Or install it yourself as:
 
 ## Usage
 
+```ruby
+Tanker::UserToken.generate(trustchain_id, trustchain_private_key, user_id)
+```
+
 Check the [examples](https://github.com/SuperTanker/user-token-ruby/examples) folder for 
 usage examples.
 
-Read Tanker documentation: https://tanker.io/docs/latest/guide/server/
+Read the Tanker documentation: https://tanker.io/docs/latest/guide/server/
 
 ## Development
 
