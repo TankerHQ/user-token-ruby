@@ -7,7 +7,7 @@ User token generation in Ruby for the [Tanker SDK](https://tanker.io/docs/latest
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'tanker-user-token', git: 'https://github.com/SuperTanker/user-token-ruby', tag: 'v1.4.0'
+gem 'tanker-user-token', git: 'https://github.com/SuperTanker/user-token-ruby' #, tag: 'vX.Y.Z'
 ```
 
 And then execute:
@@ -25,32 +25,37 @@ require 'tanker-user-token'
 trustchain_id = '<trustchain-id>'
 trustchain_private_key = '<trustchain-private-key>'
 
-# Example server-side function in which you would implement check_auth(),
-# retrieve_user_token() and store_user_token() to use your own authentication
-# and data storage mechanisms:
+# Fetch a previously stored user token
+def retrieve_user_token(user_id)
+  # ...
+end
+
+# Store a previously generated user token
+def store_user_token(user_id, token)
+  # ...
+end
+
+# Called during signin / signup of your users.
+# 
+# Send a user token, generated if necessary, but only to
+# authenticated users
 def user_token(user_id)
-  # Always ensure user_id is authenticated before returning a user token
   raise 'Not authenticated' unless check_auth(user_id)
 
-  # Retrieve a previously stored user token for this user
   token = retrieve_user_token(user_id)
 
-  # If not found, create a new user token
   if token.nil?
     token = Tanker::UserToken.generate(trustchain_id, trustchain_private_key, user_id)
-
-    # Store the newly generated user token
-    store_user_token(user_id)
+    store_user_token(user_id, token)
   end
 
-  # From now, the same user token will always be returned to a given user
   token
 end
 ```
 
 Read more about user tokens in the [Tanker guide](https://tanker.io/docs/latest/guide/server/).
 
-Check the [examples](https://github.com/SuperTanker/user-token-ruby/examples) folder for usage examples.
+Check the [examples](https://github.com/SuperTanker/user-token-ruby/tree/master/examples/) folder for usage examples.
 
 ## Development
 
