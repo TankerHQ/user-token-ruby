@@ -1,4 +1,4 @@
-# User Token
+# User Token [![Travis][build-badge]][build]
 
 User token generation in Ruby for the [Tanker SDK](https://tanker.io/docs/latest).
 
@@ -66,3 +66,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/SuperTanker/user-token-ruby.
+
+[build-badge]: https://travis-ci.org/SuperTanker/user-token-ruby.svg?branch=master
+[build]: https://travis-ci.org/SuperTanker/user-token-ruby
