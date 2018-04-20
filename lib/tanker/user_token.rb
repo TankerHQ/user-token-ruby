@@ -37,7 +37,7 @@ module Tanker
         ephemeral_public_signature_key: Base64.strict_encode64(signing_key.verify_key.to_bytes),
         ephemeral_private_signature_key: Base64.strict_encode64(signing_key.keypair_bytes),
         user_id: Base64.strict_encode64(hashed_user_id),
-        user_secret: Base64.strict_encode64(self.create_user_secret(binary_trustchain_id, user_id))
+        user_secret: Base64.strict_encode64(self.create_user_secret(binary_trustchain_id, hashed_user_id))
       }
 
       Base64.strict_encode64(JSON.generate(token))
@@ -49,9 +49,8 @@ module Tanker
       Crypto.generichash(binary_user_id + binary_trustchain_id, BLOCK_HASH_SIZE)
     end
 
-    def self.create_user_secret(binary_trustchain_id, user_id)
+    def self.create_user_secret(binary_trustchain_id, hashed_user_id)
       random_bytes = Crypto.random_bytes(USER_SECRET_SIZE - 1);
-      hashed_user_id = self.hash_user_id(binary_trustchain_id, user_id)
       check = Crypto.generichash(random_bytes + hashed_user_id, Crypto::HASH_MIN_SIZE)
       random_bytes + check[0]
     end
