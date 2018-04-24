@@ -14,6 +14,8 @@ And then execute:
 
     $ bundle
 
+Note: this gem depends on the [rbnacl-libsodium](https://github.com/crypto-rb/rbnacl-libsodium) gem, which packages the [libsodium cryptographic library](https://download.libsodium.org/doc/). So there should be no need to install libsodium through system packages.
+
 ## Usage
 
 The server-side code below demonstrates a typical flow to safely deliver user tokens to your users:

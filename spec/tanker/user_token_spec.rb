@@ -1,19 +1,50 @@
 # frozen_string_literal: true
 RSpec.describe Tanker::UserToken do
-  it 'has a version number' do
-    expect(Tanker::UserToken::VERSION).not_to be nil
-  end
-
-  it 'returns a valid token signed with the trustchain private key' do
-    trustchain = {
+  before do
+    @trustchain = {
       id: 'AzES0aJwDCej9bQVY9AUMZBCLdX0msEc/TJ4DOhZaQs=',
       pk: 'dOeLBpHz2IF37UQkS36sXomqEcEAjSyCsXZ7irn9UQA=',
       sk: 'cBAq6A00rRNVTHicxNHdDFuq6LNUo6gAz58oKqy9CGd054sGkfPYgXftRCRLfqxeiaoRwQCNLIKxdnuKuf1RAA=='
     }
+    @user_id = 'matz@tanker.io'
+  end
 
-    user_id = 'matz@tanker.io'
+  it 'has a version number' do
+    expect(Tanker::UserToken::VERSION).not_to be nil
+  end
 
-    b64_token = Tanker::UserToken.generate(trustchain[:id], trustchain[:sk], user_id)
+  [nil, 1234, ['1234'], {}].each do |value|
+
+    it "raises a TypeError if argument is a #{value.class} instead of a string" do
+      args = [@trustchain[:id], @trustchain[:sk], @user_id]
+
+      for pos in 0..2
+        # make a single argument invalid at a time
+        invalid_args = args.dup.tap { |arr| arr[pos] = value }
+
+        expect {
+          Tanker::UserToken.generate(*invalid_args)
+        }.to raise_exception(TypeError)
+      end
+    end
+
+  end
+
+  it 'raises an ArgumentError if argument is an invalid base64 string' do
+    args = [@trustchain[:id], @trustchain[:sk], @user_id]
+
+    for pos in 0..1
+      # make a single argument invalid at a time
+      invalid_args = args.dup.tap { |arr| arr[pos] = '&:,?' }
+
+      expect {
+        Tanker::UserToken.generate(*invalid_args)
+      }.to raise_exception(ArgumentError)
+    end
+  end
+
+  it 'returns a valid token signed with the trustchain private key' do
+    b64_token = Tanker::UserToken.generate(@trustchain[:id], @trustchain[:sk], @user_id)
     json_token = Base64.decode64(b64_token)
     token = JSON.parse(json_token)
 
@@ -30,7 +61,7 @@ RSpec.describe Tanker::UserToken do
     signed_data = Base64.decode64(token['ephemeral_public_signature_key']) +
                   Base64.decode64(token['user_id'])
 
-    verify_key = RbNaCl::VerifyKey.new(Base64.decode64(trustchain[:pk]))
+    verify_key = RbNaCl::VerifyKey.new(Base64.decode64(@trustchain[:pk]))
 
     expect {
       verify_key.verify(Base64.decode64(token['delegation_signature']), signed_data)
