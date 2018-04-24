@@ -1,11 +1,11 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "tanker/user_token/version"
+require "tanker/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "tanker-user-token"
-  spec.version       = Tanker::UserToken::VERSION
+  spec.version       = Tanker::VERSION
   spec.authors       = ["Tanker Team"]
   spec.email         = ["contact@tanker.io"]
 
