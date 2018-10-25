@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Tanker user token library packaged as a gem}
   spec.description   = %q{Building blocks to create your own user token server to use with the Tanker SDK}
-  spec.homepage      = "https://github.com/SuperTanker/user-token-ruby"
+  spec.homepage      = "https://github.com/TankerHQ/user-token-ruby"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.

@@ -7,7 +7,7 @@ User token generation in Ruby for the [Tanker SDK](https://tanker.io/docs/latest
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'tanker-user-token', git: 'https://github.com/SuperTanker/user-token-ruby' #, tag: 'vX.Y.Z'
+gem 'tanker-user-token', git: 'https://github.com/TankerHQ/user-token-ruby' #, tag: 'vX.Y.Z'
 ```
 
 And then execute:
@@ -57,7 +57,7 @@ end
 
 Read more about user tokens in the [Tanker guide](https://tanker.io/docs/latest/guide/server/).
 
-Check the [examples](https://github.com/SuperTanker/user-token-ruby/tree/master/examples/) folder for usage examples.
+Check the [examples](https://github.com/TankerHQ/user-token-ruby/tree/master/examples/) folder for usage examples.
 
 ## Development
 
@@ -67,7 +67,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/SuperTanker/user-token-ruby.
+Bug reports and pull requests are welcome on GitHub at https://github.com/TankerHQ/user-token-ruby.
 
-[build-badge]: https://travis-ci.org/SuperTanker/user-token-ruby.svg?branch=master
-[build]: https://travis-ci.org/SuperTanker/user-token-ruby
+[build-badge]: https://travis-ci.org/TankerHQ/user-token-ruby.svg?branch=master
+[build]: https://travis-ci.org/TankerHQ/user-token-ruby
