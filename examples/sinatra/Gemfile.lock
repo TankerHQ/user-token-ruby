@@ -7,20 +7,20 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    ffi (1.9.23)
+    ffi (1.9.25)
     json (2.1.0)
-    mustermann (1.0.2)
+    mustermann (1.0.3)
     rack (2.0.5)
-    rack-protection (2.0.2)
+    rack-protection (2.0.4)
       rack
     rbnacl (5.0.0)
       ffi
     rbnacl-libsodium (1.0.16)
       rbnacl (>= 3.0.1)
-    sinatra (2.0.2)
+    sinatra (2.0.4)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.2)
+      rack-protection (= 2.0.4)
       tilt (~> 2.0)
     sinatra-cross_origin (0.4.0)
     tilt (2.0.8)
@@ -30,9 +30,9 @@ PLATFORMS
 
 DEPENDENCIES
   json (~> 2.1.0)
-  sinatra (~> 2.0.2)
+  sinatra (~> 2.0.4)
   sinatra-cross_origin (~> 0.4.0)
   tanker-user-token!
 
 BUNDLED WITH
-   1.16.1
+   1.17.1
